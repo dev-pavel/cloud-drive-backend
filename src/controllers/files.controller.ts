@@ -92,7 +92,7 @@ class FilesController extends RootController {
                 res.send(canUpload);
             }
         } catch (e) {
-            this.sendServerErrorResp(res, e)
+            this.sendServerErrorResp(res, e);
         }
     }
 }

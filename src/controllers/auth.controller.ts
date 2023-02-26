@@ -1,14 +1,13 @@
 import {Request, Response} from "express";
-import {ServiceResponse} from "../interfaces/interfaces";
 import AuthService, {ILoginData, IRegData} from "../services/auth.service";
 import RootController from "./root.controller";
 
 class AuthController extends RootController {
-    private authService: AuthService
+    private authService: AuthService;
 
     constructor() {
         super()
-        this.authService = new AuthService()
+        this.authService = new AuthService();
     }
 
     login = async (req: Request<{}, ILoginData>, res: Response): Promise<void> => {

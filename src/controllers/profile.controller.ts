@@ -45,4 +45,4 @@ class ProfileController extends Controller {
     }
 }
 
-export default ProfileController
+export default ProfileController;

@@ -34,5 +34,5 @@ export interface IFile extends Document {
     path: string
     userId: ObjectId
     parentId: ObjectId | null
-    children: ObjectId[] | []
+    children: ObjectId[]
 }

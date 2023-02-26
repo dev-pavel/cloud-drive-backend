@@ -1,7 +1,7 @@
 import {FileTypes, IFile, ServiceResponse} from "../interfaces/interfaces";
 import File from "../models/File";
 import * as fs from "fs";
-import archiver from "archiver";
+import archiver, {Archiver} from "archiver";
 import path from "path";
 import {FileArray, UploadedFile} from "express-fileupload";
 import FileDTO from "../dto/file.dto";
@@ -42,7 +42,8 @@ class FilesService {
         await file.mv(`${basePath}/${file.name}`);
     }
 
-    getUserFolderFiles = async (userId: string, folderId = ''): Promise<ServiceResponse> => {
+    getUserFolderFiles = async (userId: string, folderId = '')
+        : Promise<ServiceResponse<{ files: FileDTO[] }>> => {
         try {
             if (folderId) {
                 const parentFolder = await File.findOne({userId, _id: folderId})
@@ -51,7 +52,7 @@ class FilesService {
                     const files = await File.find({userId, _id: parentFolder.children})
                     files.sort(this.sortFiles)
 
-                    return {success: true, result: files.map(file => new FileDTO(file))}
+                    return {success: true, result: {files: files.map(file => new FileDTO(file))}}
                 } else {
                     throw new Error('folder doesnt exists')
                 }
@@ -59,14 +60,14 @@ class FilesService {
                 const files = await File.find({userId, parentId: null})
                 files.sort(this.sortFiles)
 
-                return {success: true, result: files.map(file => new FileDTO(file))}
+                return {success: true, result: {files: files.map(file => new FileDTO(file))}}
             }
         } catch (e) {
             return {success: false, error: e}
         }
     }
 
-    downloadFiles = async (userId: string, fileIds: string[]): Promise<ServiceResponse> => {
+    downloadFiles = async (userId: string, fileIds: string[]): Promise<ServiceResponse<Archiver>> => {
         try {
             const files = await File.find({_id: fileIds})
 

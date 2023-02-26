@@ -20,7 +20,7 @@ const userSchema = new Schema<IUser>({
     },
     memoryLimit: {
         type: Number,
-        default: 1024 ** 3
+        default: Number(process.env.MEMORY_LIMIT) || 1024 ** 3
     },
     usedMemory: {
         type: Number,

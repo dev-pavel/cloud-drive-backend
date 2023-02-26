@@ -3,7 +3,6 @@ import TokensService from "../services/tokens.service";
 
 class JWTGuard {
     tokenService: TokensService;
-
     constructor() {
         this.tokenService = new TokensService();
     }
@@ -18,10 +17,10 @@ class JWTGuard {
                 if (isTokenValid) {
                     next()
                 } else {
-                    res.status(401).send({success: false, error: 'access token expired'})
+                    res.status(401).send({success: false, error: 'access token expired'});
                 }
             } else {
-                throw new Error('access token not provided')
+                throw new Error('access token not provided');
             }
         } catch (e) {
             res.status(500).send({success: false, error: e});

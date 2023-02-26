@@ -6,7 +6,7 @@ import {UpdateQuery} from "mongoose";
 
 class ProfileService {
 
-    getProfile = async (userId: string): Promise<ServiceResponse> => {
+    getProfile = async (userId: string): Promise<ServiceResponse<{ profile: ProfileDTO }>> => {
         try {
             const user = await User.findById(userId);
 
@@ -40,12 +40,12 @@ class ProfileService {
         }
     }
 
-    canUploadFiles = async (files: FileArray, userId: string): Promise<ServiceResponse> => {
+    canUploadFiles = async (files: FileArray, userId: string): Promise<ServiceResponse<{ canUpload: boolean }>> => {
         try {
             let filesSize = 0;
             const user = await User.findById(userId).select('memoryLimit usedMemory')
 
-            if(!user) {
+            if (!user) {
                 throw new Error('user doesnt exists')
             }
 
