@@ -1,4 +1,4 @@
-import Controller from "./root.controller";
+import Controller from "./basic.controller";
 import {Request, Response} from "express";
 import ProfileService from "../services/profile.service";
 import {IUser} from "../interfaces/interfaces";
@@ -18,7 +18,7 @@ class ProfileController extends Controller {
 
             res.send(profile);
         } catch (e) {
-            this.sendServerErrorResp(res, e);
+            this.sendServerError(res, e);
         }
     }
 
@@ -29,7 +29,7 @@ class ProfileController extends Controller {
 
             res.send(update);
         } catch (e) {
-            this.sendServerErrorResp(res, e);
+            this.sendServerError(res, e);
         }
     }
 
@@ -40,7 +40,7 @@ class ProfileController extends Controller {
 
             res.send(deleteProfile);
         } catch (e) {
-            this.sendServerErrorResp(res, e);
+            this.sendServerError(res, e);
         }
     }
 }

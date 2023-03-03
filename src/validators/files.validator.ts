@@ -1,31 +1,36 @@
-import {body, param, ValidationChain} from "express-validator";
+import {body, param} from "express-validator";
+import BasicValidator from "./basic.validator";
 
-class FilesValidator {
+class FilesValidator extends BasicValidator {
 
-    download(): ValidationChain[] {
+    get download() {
         return [
             body('fileIds')
-                .custom(fileIds => Array.isArray(fileIds) && fileIds?.every(fileId => typeof fileId === "string"))
+                .custom(fileIds => Array.isArray(fileIds) && fileIds?.every(fileId => typeof fileId === "string")),
+            this.checkErrors
         ]
     }
 
-    createFolder(): ValidationChain[] {
+    get createFolder() {
         return [
             body('name').isString(),
             body('parentFolderId')
-                .custom(parentFolderId => !parentFolderId || typeof parentFolderId === "string")
+                .custom(parentFolderId => !parentFolderId || typeof parentFolderId === "string"),
+            this.checkErrors
         ]
     }
 
-    uploadFiles(): ValidationChain[] {
+    get uploadFiles() {
         return [
             body('folderId').custom(folderId => !folderId || typeof folderId === "string"),
+            this.checkErrors
         ]
     }
 
-    deleteFile(): ValidationChain[] {
+    get deleteFile() {
         return [
-            param('fileId').isString()
+            param('fileId').isString(),
+            this.checkErrors
         ]
     }
 }

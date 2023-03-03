@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import FilesService from "../services/files.service";
-import RootController from "./root.controller";
+import RootController from "./basic.controller";
 import ProfileService from "../services/profile.service";
 
 class FilesController extends RootController {
@@ -21,7 +21,7 @@ class FilesController extends RootController {
 
             res.send(files)
         } catch (e) {
-            this.sendServerErrorResp(res, e)
+            this.sendServerError(res, e)
         }
     }
 
@@ -30,14 +30,14 @@ class FilesController extends RootController {
             const {userId} = this.getUserTokenData(req)
             const download = await this.filesService.downloadFiles(userId, req.body.fileIds)
 
-            if (download.success) {
+            if (download.success && download.result) {
                 res.attachment(this.downloadArchiveName);
                 download.result.pipe(res)
             } else {
                 res.send(download)
             }
         } catch (e) {
-            this.sendServerErrorResp(res, e)
+            this.sendServerError(res, e)
         }
     }
 
@@ -48,7 +48,7 @@ class FilesController extends RootController {
 
             res.send(createFolder)
         } catch (e) {
-            this.sendServerErrorResp(res, e)
+            this.sendServerError(res, e)
         }
     }
 
@@ -66,7 +66,7 @@ class FilesController extends RootController {
                 res.send(deleteFile)
             }
         } catch (e) {
-            this.sendServerErrorResp(res, e)
+            this.sendServerError(res, e)
         }
     }
 
@@ -75,7 +75,7 @@ class FilesController extends RootController {
             const {userId} = this.getUserTokenData(req);
             const canUpload = await this.profileService.canUploadFiles(req.files!, userId);
 
-            if (canUpload.result.canUpload) {
+            if (canUpload.result?.canUpload) {
                 const upload = await this.filesService.uploadFiles(req.files!, userId, req.body.folderId);
 
                 if (upload.success && upload.result) {
@@ -92,7 +92,7 @@ class FilesController extends RootController {
                 res.send(canUpload);
             }
         } catch (e) {
-            this.sendServerErrorResp(res, e);
+            this.sendServerError(res, e);
         }
     }
 }

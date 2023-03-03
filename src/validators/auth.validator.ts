@@ -1,25 +1,30 @@
-import {body, ValidationChain} from "express-validator";
+import {body} from "express-validator";
+import BasicValidator from "./basic.validator";
 
-class AuthValidator {
-
-    login(): ValidationChain[] {
+class AuthValidator extends BasicValidator {
+    get login() {
         return [
             body('email').isEmail(),
-            body('password').isString()
+            body('password').isString(),
+            this.checkErrors
         ]
     }
 
-    registration(): ValidationChain[] {
+    get registration() {
         return [
             body('email').isEmail(),
             body('password').isString(),
             body('firstName').isString(),
-            body('lastName').isString()
+            body('lastName').isString(),
+            this.checkErrors
         ]
     }
 
-    refresh(): ValidationChain[] {
-        return [body('refreshToken').isString()]
+    get refresh() {
+        return [
+            body('refreshToken').isString(),
+            this.checkErrors
+        ]
     }
 }
 

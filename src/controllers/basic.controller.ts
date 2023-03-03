@@ -9,8 +9,12 @@ class Controller {
         return jwt.decode(req.headers.authorization!) as IUserToken;
     }
 
-    sendServerErrorResp(res: Response<ServiceResponse>, error: any): void {
+    sendServerError(res: Response<ServiceResponse>, error: any): void {
         res.status(this.serverErrorStatusCode).json({success: false, error});
+    }
+
+    sendCustomError(res: Response<ServiceResponse>, error: any, status = 400) {
+        res.status(status).json({success: false, error});
     }
 }
 

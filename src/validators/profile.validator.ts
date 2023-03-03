@@ -1,10 +1,12 @@
 import {body, ValidationChain} from "express-validator";
+import BasicValidator from "./basic.validator";
 
-class ProfileValidator {
+class ProfileValidator extends BasicValidator {
 
-    updateProfile(): ValidationChain[] {
+    get updateProfile() {
         return [
-            body('userData').notEmpty()
+            body('userData').notEmpty(),
+            this.checkErrors
         ]
     }
 }
