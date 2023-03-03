@@ -16,10 +16,10 @@ export interface ILoginData {
 }
 
 class AuthService {
-    private tokenService: TokensService
+    private tokenService: TokensService;
 
     constructor() {
-        this.tokenService = new TokensService()
+        this.tokenService = new TokensService();
     }
 
     private hashPassword(password: string): string {
@@ -79,11 +79,11 @@ class AuthService {
         }
     }
 
-    refresh = async (refreshToken: string): Promise<ServiceResponse> => {
+    refresh = async (refreshToken: string): Promise<ServiceResponse<ITokens>> => {
         try {
             if (this.tokenService.checkTokenValid(refreshToken, 'refresh')) {
-                const decodedToken = this.tokenService.decodeToken(refreshToken)
-                const tokens = this.tokenService.generateTokens(decodedToken)
+                const {email, userId} = this.tokenService.decodeToken(refreshToken)
+                const tokens = this.tokenService.generateTokens({email, userId})
 
                 return {success: true, result: tokens}
             } else {

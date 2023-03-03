@@ -1,4 +1,5 @@
 import {ObjectId, Document} from "mongoose";
+import {JwtPayload} from "jsonwebtoken";
 
 export interface ServiceResponse<R = any, E = any> {
     success: boolean
@@ -16,7 +17,7 @@ export interface IUser {
     usedMemory: number
 }
 
-export interface IUserToken {
+export interface IUserToken extends JwtPayload {
     email: string
     userId: string
 }
