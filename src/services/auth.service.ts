@@ -82,12 +82,12 @@ class AuthService {
     refresh = async (refreshToken: string): Promise<ServiceResponse<ITokens>> => {
         try {
             if (this.tokenService.checkTokenValid(refreshToken, 'refresh')) {
-                const {email, userId} = this.tokenService.decodeToken(refreshToken)
-                const tokens = this.tokenService.generateTokens({email, userId})
+                const {email, userId} = this.tokenService.decodeToken(refreshToken)!;
+                const tokens = this.tokenService.generateTokens({email, userId});
 
                 return {success: true, result: tokens}
             } else {
-                throw new Error('refresh token not valid')
+                throw new Error('refresh token not valid');
             }
         } catch (e) {
             return {success: false, error: e}

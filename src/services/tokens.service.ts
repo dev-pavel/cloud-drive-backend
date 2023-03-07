@@ -14,7 +14,7 @@ class TokensService {
 
     constructor(accessTokenSecret?: string, refreshTokenSecret?: string) {
         this.accessTokenSecret = accessTokenSecret || process.env.ACCESS_TOKEN_SECRET || 'access token secret';
-            this.refreshTokenSecret = refreshTokenSecret || process.env.REFRESH_TOKEN_SECRET || 'refresh token secret';
+        this.refreshTokenSecret = refreshTokenSecret || process.env.REFRESH_TOKEN_SECRET || 'refresh token secret';
     }
 
     generateTokens = (userData: IUserToken): ITokens => {
@@ -43,7 +43,7 @@ class TokensService {
         }
     }
 
-    decodeToken = (token: string): IUserToken => {
+    decodeToken = (token: string): IUserToken | null => {
         return jwt.decode(token) as IUserToken;
     }
 }

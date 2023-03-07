@@ -4,10 +4,10 @@ import {faker} from "@faker-js/faker";
 import AuthService from "../../services/auth.service";
 import jwt from "jsonwebtoken";
 
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || 'refresh token secret'
-const authService = new AuthService();
-
 describe('Auth Service Tests', () => {
+    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || 'refresh token secret'
+    const authService = new AuthService();
+
     const userData = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
@@ -162,8 +162,8 @@ describe('Auth Service Tests', () => {
             const res = await authService.refresh(token);
 
             expect(res.success).toBe(true);
-            expect(res.result?.accessToken).toBeTruthy();
-            expect(res.result?.refreshToken).toBeTruthy();
+            expect(typeof res.result?.accessToken).toBe("string");
+            expect(typeof res.result?.refreshToken).toBe("string");
         })
     })
 })
