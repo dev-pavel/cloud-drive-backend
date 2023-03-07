@@ -8,6 +8,7 @@ import fileUpload from "express-fileupload";
 import authRoutes from "./routes/auth.route";
 import filesRoutes from "./routes/files.route";
 import profileRoutes from "./routes/profile.route";
+import compression from "compression";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
 app.use(cookieParser());
 app.use(fileUpload());
+app.use(compression());
 app.disable('x-powered-by');
 
 app.use('/api/auth', authRoutes);

@@ -12,7 +12,6 @@ class AuthController extends RootController {
 
     login = async (req: Request<{}, ILoginData>, res: Response): Promise<void> => {
         try {
-            console.log(122)
             const login = await this.authService.login(req.body)
 
             res.send(login)

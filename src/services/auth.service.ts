@@ -42,10 +42,10 @@ class AuthService {
 
                     return {success: true, result: tokens}
                 } else {
-                    throw new Error('entered an invalid username or password')
+                    throw 'Entered an invalid username or password';
                 }
             } else {
-                throw new Error('entered an invalid username or password')
+                throw 'Entered an invalid username or password';
             }
         } catch (e) {
             return {success: false, error: e}
